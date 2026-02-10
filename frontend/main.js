@@ -11,10 +11,13 @@ let selectedAmount = 0;
 let ticketId = null;
 let currentBalance = 0;
 let html5QrcodeScanner = null;
+let isPaymentPhase = false;
 
 // DOM Elements
 const scannerView = document.getElementById('scanner-view');
 const rechargeForm = document.getElementById('recharge-form');
+const paymentArea = document.getElementById('payment-method-area');
+const selectionArea = document.getElementById('selection-area');
 const ticketDisplay = document.getElementById('ticket-id-display');
 const balanceDisplay = document.getElementById('balance-display');
 const amountBtns = document.querySelectorAll('.amount-btn');
@@ -74,11 +77,33 @@ function setupEventListeners() {
 
             selectedAmount = parseInt(btn.dataset.amount);
             payBtn.disabled = false;
-            payBtn.textContent = `PAGAR $${selectedAmount}`;
+
+            if (!isPaymentPhase) {
+                payBtn.textContent = 'CONTINUAR';
+            } else {
+                payBtn.textContent = `PAGAR $${selectedAmount}`;
+            }
         });
     });
 
-    payBtn.addEventListener('click', handlePayment);
+    payBtn.addEventListener('click', () => {
+        if (!isPaymentPhase) {
+            goToPaymentPhase();
+        } else {
+            handlePayment();
+        }
+    });
+}
+
+function goToPaymentPhase() {
+    isPaymentPhase = true;
+    selectionArea.style.opacity = '0.5';
+    selectionArea.style.pointerEvents = 'none';
+    paymentArea.style.display = 'block';
+    payBtn.textContent = `PAGAR $${selectedAmount}`;
+
+    // Auto-scroll to payment area
+    paymentArea.scrollIntoView({ behavior: 'smooth' });
 }
 
 async function fetchBalance() {
@@ -120,23 +145,32 @@ async function handlePayment() {
             currentBalance = data.newBalance;
             updateBalanceUI();
 
-            showStatus('¡Recarga Exitosa! Tu saldo se ha actualizado.', 'success');
+            showStatus('¡Pago Exitoso! Tu tarjeta ha sido recargada.', 'success');
             payBtn.innerHTML = 'PAGO COMPLETADO';
 
             setTimeout(() => {
-                payBtn.textContent = 'PAGAR AHORA';
-                amountBtns.forEach(b => b.classList.remove('selected'));
-                selectedAmount = 0;
+                resetFlow();
             }, 3000);
         } else {
             throw new Error(data.error);
         }
 
     } catch (error) {
-        showStatus('Error al procesar el pago. Intenta de nuevo.', 'error');
+        showStatus('Error en la tarjeta. Intenta de nuevo.', 'error');
         payBtn.disabled = false;
         payBtn.textContent = 'REINTENTAR PAGO';
     }
+}
+
+function resetFlow() {
+    isPaymentPhase = false;
+    paymentArea.style.display = 'none';
+    selectionArea.style.opacity = '1';
+    selectionArea.style.pointerEvents = 'auto';
+    payBtn.textContent = 'CONTINUAR';
+    payBtn.disabled = true;
+    amountBtns.forEach(b => b.classList.remove('selected'));
+    selectedAmount = 0;
 }
 
 function showStatus(text, type) {

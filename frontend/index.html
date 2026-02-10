@@ -51,7 +51,26 @@
         </div>
       </section>
 
-      <button id="pay-button" class="pay-btn" disabled>PAGAR AHORA</button>
+      <section id="payment-method-area" style="display: none; margin-top: 24px; animation: slideIn 0.3s ease-out;">
+        <p class="label">Método de Pago</p>
+        <div class="card-input-container"
+          style="background: #262626; padding: 16px; border-radius: 8px; border: 1px solid #444; margin-top: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <span style="font-size: 20px;">💳</span>
+            <span style="font-weight: 600;">Tarjeta de Débito / Crédito</span>
+          </div>
+          <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" readonly
+            style="width: 100%; background: #333; border: 1px solid #555; color: white; padding: 10px; border-radius: 4px; margin-bottom: 8px; cursor: not-allowed;">
+          <div style="display: flex; gap: 10px;">
+            <input type="text" placeholder="MM/YY" readonly
+              style="width: 60px; background: #333; border: 1px solid #555; color: white; padding: 10px; border-radius: 4px; cursor: not-allowed;">
+            <input type="password" placeholder="CVV" readonly
+              style="width: 50px; background: #333; border: 1px solid #555; color: white; padding: 10px; border-radius: 4px; cursor: not-allowed;">
+          </div>
+        </div>
+      </section>
+
+      <button id="pay-button" class="pay-btn" disabled>CONTINUAR</button>
 
       <div id="status-message" class="status-message" style="display: none;"></div>
     </main>
