@@ -69,6 +69,28 @@ function onScanFailure(error) {
 }
 
 function setupEventListeners() {
+    // Card formatting logic
+    const cardNum = document.getElementById('card-number');
+    const cardExp = document.getElementById('card-expiry');
+
+    if (cardNum) {
+        cardNum.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = value;
+        });
+    }
+
+    if (cardExp) {
+        cardExp.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+    }
+
     amountBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             // Toggle selection
