@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Metro Digital - Recarga de Boleto</title>
+  <meta name="description" content="Recarga tu boleto de metro de forma rápida y segura." />
+  <!-- Theme color for mobile browser UI -->
+  <meta name="theme-color" content="#0d0d0d" />
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>METRO DIGITAL</h1>
+      <p class="label" style="text-align: center;">Movilidad Inteligente</p>
+    </header>
+
+    <main class="card" id="scanner-view">
+      <div class="ticket-info">
+        <h2>Escanear Boleto</h2>
+        <p class="label">Apunta tu cámara al código QR del boleto físico</p>
+      </div>
+      <div id="reader" style="width: 100%; margin-top: 20px; border-radius: 12px; overflow: hidden;"></div>
+      <div id="scanner-status" class="status-message" style="margin-top: 10px; display: none;"></div>
+    </main>
+
+    <main class="card" id="recharge-form" style="display: none;">
+      <div class="ticket-info">
+        <p class="label">ID de Boleto</p>
+        <p id="ticket-id-display" class="ticket-id">SCAN-QR-CODE</p>
+
+        <p class="label" style="margin-top: 20px;">Saldo Actual</p>
+        <p id="balance-display" class="balance-amount">$0.00</p>
+      </div>
+
+      <section id="selection-area">
+        <p class="label">Selecciona Monto a Recargar</p>
+        <div class="recharge-grid">
+          <button class="amount-btn" data-amount="10">$10</button>
+          <button class="amount-btn" data-amount="20">$20</button>
+          <button class="amount-btn" data-amount="50">$50</button>
+          <button class="amount-btn" data-amount="100">$100</button>
+          <button class="amount-btn" data-amount="200">$200</button>
+          <button class="amount-btn" data-amount="500">$500</button>
+        </div>
+      </section>
+
+      <button id="pay-button" class="pay-btn" disabled>PAGAR AHORA</button>
+
+      <div id="status-message" class="status-message" style="display: none;"></div>
+    </main>
+
+    <footer style="text-align: center; font-size: 11px; color: var(--text-muted);">
+      &copy; 2026 Sistema de Transporte Inteligente. Todos los derechos reservados.
+    </footer>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
