@@ -2,7 +2,9 @@ import './style.css'
 import { Html5QrcodeScanner } from 'html5-qrcode'
 
 // Configuration
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = window.location.origin.includes('localhost')
+    ? 'http://localhost:8080/api'
+    : '/api';
 
 // State
 let selectedAmount = 0;
